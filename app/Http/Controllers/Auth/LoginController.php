@@ -15,12 +15,21 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+      
+      	$loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+      
+        //$credentials = $request->only($loginType, 'password');
+      	$credentials = [
+            $loginType => $request->input('login'),
+            'password' => $request->input('password')
+        ];
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard');
+            // Login successful
+            return redirect()->intended('/dashboard')->with('success', 'Login successful.');
         } else {
-            return back()->withErrors(['message' => 'Invalid credentials']);
+            // Login failed
+            return redirect()->back()->withErrors(['error' => 'Invalid credentials.'])->withInput($request->only('login'));
         }
     }
 }
