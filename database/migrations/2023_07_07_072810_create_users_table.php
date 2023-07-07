@@ -14,9 +14,13 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->string('username')->unique();
             $table->string('ccode');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('email')->unique();
-            $table->string('status')->default('active');
+            $table->string('emp_id')->unique();
+            $table->string('usertype');
+            $table->string('team');
+            $table->string('designation');
+            $table->string('status');
             $table->string('password');
             $table->string('user_dp')->nullable();
             $table->rememberToken();
