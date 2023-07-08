@@ -32,4 +32,11 @@ class LoginController extends Controller
             return redirect()->back()->withErrors(['error' => 'Invalid credentials.'])->withInput($request->only('login'));
         }
     }
+	
+	public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect('/login')->with('success', 'You have been logged out.');
+    }
 }
