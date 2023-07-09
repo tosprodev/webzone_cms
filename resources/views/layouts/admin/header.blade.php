@@ -86,7 +86,7 @@
 									<form action="{{ route('notifications.clearLastFive') }}" method="POST" class="d-inline">
 										@csrf
 										@method('DELETE')
-										@if ($unreadCount > 5)
+										@if ($unreadCount > 0)
 											<button type="submit" class="dropdown-item">Clear</button>
 										@endif
 									</form>

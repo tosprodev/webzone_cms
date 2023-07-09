@@ -5,13 +5,15 @@ use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Pagination\Paginator;
+use App\Models\EmployeeDetail;
 
 class AdminDashboardController extends Controller
 {
     public function index()
     {
-		$notify = "";
-        return view('admin.dashboard.index', compact('notify'));
+		$userId = auth()->user()->id;
+		$employeeDetails = EmployeeDetail::where('user_id', $userId)->first();
+        return view('admin.dashboard.index', compact('employeeDetails'));
     }
     
     public function markAsRead(Request $request, Notification $notification)

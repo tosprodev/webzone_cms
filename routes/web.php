@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Global\Profile\ProfileController;
+use App\Http\Controllers\Agent\AgentDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,9 +44,18 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         return redirect()->route('login');
     });
 	Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
+	Route::patch('/profile/update-gender', [ProfileController::class, 'updateGender'])->name('user.profile.updateGender');
+	Route::post('/profile/update-caller-name', [ProfileController::class, 'updateCallerName'])->name('user.profile.updateCallerName');
+	Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('user.profile.updateProfile');
 	
 });
 
+Route::middleware(['auth'])->prefix('agent')->group(function () {
+	Route::get('/', function () {
+        return redirect()->route('login');
+    });
+    Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+});
 // Redirect all other /admin/* routes to the /admin/dashboard route
 //Route::redirect('/admin/{any}', '/admin/dashboard', 301);
 
